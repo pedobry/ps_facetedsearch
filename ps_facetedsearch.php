@@ -1418,10 +1418,10 @@ class Ps_Facetedsearch extends Module implements WidgetInterface
                         FROM `' . _DB_PREFIX_ . 'product_attribute_combination` pac
                         LEFT JOIN `' . _DB_PREFIX_ . 'product_attribute` pa
                         ON (pa.`id_product_attribute` = pac.`id_product_attribute`)' .
-                        Shop::addSqlAssociation('product_attribute', 'pa') .
-                        ' JOIN `'._DB_PREFIX_.'stock_available` sa
-                        ON (sa.`id_product_attribute` = pac.`id_product_attribute` AND sa.`quantity` > 0)
-                        WHERE ' . implode(' OR ', $sub_query) . ') ';
+                            Shop::addSqlAssociation('product_attribute', 'pa') . '
+                        LEFT JOIN `' . _DB_PREFIX_ . 'stock_available` sta
+                        ON (sta.`id_product_attribute` = pa.`id_product_attribute` AND sta.`id_product` = pa.`id_product`) ' .
+                        ' WHERE ' . implode(' OR ', $sub_query) . ' AND sta.quantity > 0) ';
                     }
                     break;
 
